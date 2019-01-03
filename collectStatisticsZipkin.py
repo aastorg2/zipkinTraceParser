@@ -11,40 +11,9 @@ import json
 import sys
 import datetime
 import pprint
-"""
-class Analysis:
 
-    #def __init__(self):
-    allDataSet = set()
-    
-    def debug_print(this,text, flag):
 
-        if flag:
-            print text
 
-    def set_compiler_args(this, sln_file):
-        compile_command = 'MSBuild.exe'
-        solution_file = sln_file
-        #compile_option = '/t:rebuild'
-        compile_option = '/t:build' # Quickgraph.Tests does not support rebuild target
-        build_mode = 'debug'
-        ignore_warning = '/property:WarningLevel=2'
-        cmd_exec = [compile_command, solution_file, compile_option,ignore_warning]
-        return cmd_exec
-"""
-
-def debug_print(text, flag):
-	if flag:
-		print text
-
-def getInitialService(trace):
-   for t in trace:
-      print t['name']
-      if 'parentId' not in t:
-         print "!!! Initial service: "+ t['name']
-      else:
-         print t['parentId']
-   print "====="
 
 #### Comparison based on Zipkin documentaion after Clean step-  MergeV2ById:
 #https://github.com/openzipkin/zipkin/blob/master/zipkin-ui/js/component_data/spanCleaner.js
@@ -272,36 +241,3 @@ def main():
 if __name__ == '__main__':
     main()
     
-    
-    
-# other options
-
-# For parsing discrete
-#if str(tree['attribute']).find("Contains") != -1 and ( (tree['children'][0]['attribute'] != "" or tree['children'][1]['attribute'] != "" ) or (tree['children'][0]['attribute']== "" or tree['children'][1]['attribute'] == "" ) ):
-    #    node= '( ' +  tree['attribute'] +' )'     
-    
-    #elif str(tree['attribute']).find("s1.TryGetValue(x.out.val)") != -1 and ( (tree['children'][0]['attribute'] != "" or tree['children'][1]['attribute'] != "" ) or (tree['children'][0]['attribute']== "" or tree['children'][1]['attribute'] == "" ) ):
-    #    node= '( ' +  's1.TryGetValue(x, out val)' +' )'     
-
-    #elif str(tree['attribute']).find("s1.TryPeek(out.dummy)") != -1 and str(tree['attribute']).find("s1.TryPeek(out.dummy).s1.Peek().negSevenPlus.x") == -1 and ( (tree['children'][0]['attribute'] != "" or tree['children'][1]['attribute'] != "" ) or (tree['children'][0]['attribute']== "" or tree['children'][1]['attribute'] == "" ) ):
-    #        node= '( ' +  's1.TryPeek(out dummy)' +' )'
-    
-        
-# For parsing continious
-#if  str(tree['attribute']).find("s1.TryPeek(out.dummy).s1.Peek().negSevenPlus.x") != -1:
-            #    node = '( '+ tree['attribute'].replace("s1.TryPeek(out.dummy).s1.Peek().negSevenPlus.x", "(s1.TryPeek(out dummy)?s1.Peek(): -7 + x)")  + ' <= ' +  str(tree['cut'])  + ' )'
-            #else:
-            
-            
-#Combining left and right tree
-#if "true" == left.strip():
-#    return " ("+node +") || "+ " ((!"+node +") && ("+ right.strip() +"))"
-#if "true" == right.strip():
-#    return " ("+node +" && ("+ left.strip() +")) || "+ " ((!"+node +"))"
-
-#if "false" == right.strip():
-#    return " ("+node +" && ("+ left.strip() +"))"
-
-#if "false" == left.strip():
-#    return " ((!"+node +") && ("+ right.strip() +")) "
-
