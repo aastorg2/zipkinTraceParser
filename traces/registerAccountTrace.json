@@ -1,0 +1,211 @@
+[
+    {
+        "traceId": "a0076168e7ec1438",
+        "parentId": "ba5ad38b27629d96",
+        "id": "659a261d89a97092",
+        "kind": "CLIENT",
+        "name": "http:/verification/verify",
+        "timestamp": 1546138899935000,
+        "duration": 308000,
+        "localEndpoint": {
+            "serviceName": "ts-register-service",
+            "ipv4": "172.29.0.58",
+            "port": 12344
+        },
+        "tags": {
+            "http.host": "ts-verification-code-service",
+            "http.method": "POST",
+            "http.path": "/verification/verify",
+            "http.url": "http://ts-verification-code-service:15678/verification/verify",
+            "spring.instance_id": "cfb2ead90fa1:ts-register-service:12344"
+        }
+    },
+    {
+        "traceId": "a0076168e7ec1438",
+        "parentId": "a0076168e7ec1438",
+        "id": "ba5ad38b27629d96",
+        "kind": "CLIENT",
+        "name": "http:/verification/verify",
+        "timestamp": 1546138899934000,
+        "duration": 319000,
+        "localEndpoint": {
+            "serviceName": "ts-register-service",
+            "ipv4": "172.29.0.58",
+            "port": 12344
+        },
+        "tags": {
+            "http.host": "ts-verification-code-service",
+            "http.method": "POST",
+            "http.path": "/verification/verify",
+            "http.url": "http://ts-verification-code-service:15678/verification/verify",
+            "spring.instance_id": "cfb2ead90fa1:ts-register-service:12344"
+        }
+    },
+    {
+        "traceId": "a0076168e7ec1438",
+        "parentId": "dccdd65950f4910f",
+        "id": "222edd8ae1f52650",
+        "kind": "CLIENT",
+        "name": "http:/account/register",
+        "timestamp": 1546138900278000,
+        "duration": 338000,
+        "localEndpoint": {
+            "serviceName": "ts-register-service",
+            "ipv4": "172.29.0.58",
+            "port": 12344
+        },
+        "tags": {
+            "http.host": "ts-sso-service",
+            "http.method": "POST",
+            "http.path": "/account/register",
+            "http.url": "http://ts-sso-service:12349/account/register",
+            "spring.instance_id": "cfb2ead90fa1:ts-register-service:12344"
+        }
+    },
+    {
+        "traceId": "a0076168e7ec1438",
+        "parentId": "a0076168e7ec1438",
+        "id": "dccdd65950f4910f",
+        "kind": "CLIENT",
+        "name": "http:/account/register",
+        "timestamp": 1546138900278000,
+        "duration": 339000,
+        "localEndpoint": {
+            "serviceName": "ts-register-service",
+            "ipv4": "172.29.0.58",
+            "port": 12344
+        },
+        "tags": {
+            "http.host": "ts-sso-service",
+            "http.method": "POST",
+            "http.path": "/account/register",
+            "http.url": "http://ts-sso-service:12349/account/register",
+            "spring.instance_id": "cfb2ead90fa1:ts-register-service:12344"
+        }
+    },
+    {
+        "traceId": "a0076168e7ec1438",
+        "parentId": "a0076168e7ec1438",
+        "id": "dccdd65950f4910f",
+        "kind": "SERVER",
+        "name": "http:/account/register",
+        "timestamp": 1546138900418000,
+        "duration": 175081,
+        "localEndpoint": {
+            "serviceName": "ts-sso-service",
+            "ipv4": "172.29.0.2",
+            "port": 12349
+        },
+        "tags": {
+            "mvc.controller.class": "AccountSsoController",
+            "mvc.controller.method": "createNewAccount",
+            "spring.instance_id": "092970656fd8:ts-sso-service:12349"
+        },
+        "shared": true
+    },
+    {
+        "traceId": "a0076168e7ec1438",
+        "parentId": "a0076168e7ec1438",
+        "id": "ba5ad38b27629d96",
+        "kind": "SERVER",
+        "name": "http:/verification/verify",
+        "timestamp": 1546138900142000,
+        "duration": 81399,
+        "localEndpoint": {
+            "serviceName": "ts-verification-code-service",
+            "ipv4": "172.29.0.7",
+            "port": 15678
+        },
+        "tags": {
+            "mvc.controller.class": "VerificationCodeController",
+            "mvc.controller.method": "verifyCode",
+            "spring.instance_id": "5bd48baafccc:ts-verification-code-service:15678"
+        },
+        "shared": true
+    },
+    {
+        "traceId": "a0076168e7ec1438",
+        "parentId": "96677a1a56592000",
+        "id": "5abba70257a40e1a",
+        "kind": "CLIENT",
+        "name": "http:/inside_payment/createaccount",
+        "timestamp": 1546138900622000,
+        "duration": 318000,
+        "localEndpoint": {
+            "serviceName": "ts-register-service",
+            "ipv4": "172.29.0.58",
+            "port": 12344
+        },
+        "tags": {
+            "http.host": "ts-inside-payment-service",
+            "http.method": "POST",
+            "http.path": "/inside_payment/createAccount",
+            "http.url": "http://ts-inside-payment-service:18673/inside_payment/createAccount",
+            "spring.instance_id": "cfb2ead90fa1:ts-register-service:12344"
+        }
+    },
+    {
+        "traceId": "a0076168e7ec1438",
+        "parentId": "a0076168e7ec1438",
+        "id": "96677a1a56592000",
+        "kind": "CLIENT",
+        "name": "http:/inside_payment/createaccount",
+        "timestamp": 1546138900622000,
+        "duration": 319000,
+        "localEndpoint": {
+            "serviceName": "ts-register-service",
+            "ipv4": "172.29.0.58",
+            "port": 12344
+        },
+        "tags": {
+            "http.host": "ts-inside-payment-service",
+            "http.method": "POST",
+            "http.path": "/inside_payment/createAccount",
+            "http.url": "http://ts-inside-payment-service:18673/inside_payment/createAccount",
+            "spring.instance_id": "cfb2ead90fa1:ts-register-service:12344"
+        }
+    },
+    {
+        "traceId": "a0076168e7ec1438",
+        "id": "a0076168e7ec1438",
+        "kind": "SERVER",
+        "name": "http:/register",
+        "timestamp": 1546138899792000,
+        "duration": 1205942,
+        "localEndpoint": {
+            "serviceName": "ts-register-service",
+            "ipv4": "172.29.0.58",
+            "port": 12344
+        },
+        "tags": {
+            "http.host": "ts-register-service",
+            "http.method": "POST",
+            "http.path": "/register",
+            "http.status_code": "200",
+            "http.url": "http://ts-register-service:12344/register",
+            "mvc.controller.class": "AccountRegisterController",
+            "mvc.controller.method": "createNewAccount",
+            "spring.instance_id": "cfb2ead90fa1:ts-register-service:12344"
+        }
+    },
+    {
+        "traceId": "a0076168e7ec1438",
+        "parentId": "a0076168e7ec1438",
+        "id": "96677a1a56592000",
+        "kind": "SERVER",
+        "name": "http:/inside_payment/createaccount",
+        "timestamp": 1546138900773000,
+        "duration": 145484,
+        "localEndpoint": {
+            "serviceName": "ts-inside-payment-service",
+            "ipv4": "172.29.0.68",
+            "port": 18673
+        },
+        "tags": {
+            "mvc.controller.class": "InsidePaymentController",
+            "mvc.controller.method": "createAccount",
+            "spring.instance_id": "186b77b162bb:ts-inside-payment-service:18673"
+        },
+        "shared": true
+    }
+]
