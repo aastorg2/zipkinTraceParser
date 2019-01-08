@@ -96,15 +96,30 @@ def keyString(id, endpoint,shared = False):
     this._span = span; // undefined is possible when this is a synthetic root node
     this._children = [];
 """
-class SpanNode:
-   parent = dict()
-   span = dict()
-   children = list()
-    
-   def __init__(self, span):
+# Adapted from https://github.com/openzipkin/zipkin/blob/master/zipkin-ui/js/component_data/spanNode.js
+class SpanNode():
+
+   def __init__(self, span=None):
       self.parent = None
-      self.span = span
+      self.span = span # None is possible when this is a synthetic root node
       self.children =[]
+
+   def getParent(self):
+      return self.parent
+
+   def setParent(self, newParent):
+      self.parent = newParent
+
+   def getChildren(self):
+      return self.children
+
+   def addChild(self, child):
+      if not child:
+         raise ValueError("child was undefined")
+      if child is self:
+         raise ValueError("circular dependency")
+      child.setParent(self)
+      self.children.append(child)
 
 class SpanNodeBuilder:
    spanToParent = dict()
@@ -131,7 +146,7 @@ class SpanNodeBuilder:
    def process(self, span):
       localEndPoint = span['localEndpoint']
       key = keyString(span['id'], span['localEndpoint'], (span['shared'] if 'shared' in span else False))
-      noEndPointKey = keyString(span['id'],{}, (span['shared'] if 'shared' in span else False)) if localEndPoint else key
+      noEndPointKey = keyString(span['id'],None, (span['shared'] if 'shared' in span else False)) if localEndPoint else key
       #print json.dumps(span)
       
       print span['localEndpoint']['serviceName'] , span['localEndpoint']['ipv4'], span['id'], span['kind'], (span['shared'] if 'shared' in span else ""),(span['parentId'] if 'parentId' in span else "undefined")
@@ -158,11 +173,13 @@ class SpanNodeBuilder:
              pass # missing parentID - we are root or don't know parent.
 
       node = SpanNode(span)
+      ###
+      ### self.keyToNode does not contain root if there is a root node
+      ###
       if not parentId and not self.rootSpan:
          #special-case root, and attribute missing parents to it. In
          #other words, assume that the first root is the "real" root.
          self.rootSpan = node
-         #self.spanToParent.
          del self.spanToParent[noEndPointKey]
          print "Found Root: "+ json.dumps(node.span)
       elif 'shared' in span and span['shared']:
@@ -173,8 +190,7 @@ class SpanNodeBuilder:
       else:
          self.keyToNode[noEndPointKey] = node
       
-      # At this point, we have the most reliable parent-child relationships and can allocate spans
-      # corresponding the the best place in the trace tree.
+      
    
    
    def build(self, trace):
@@ -203,23 +219,60 @@ class SpanNodeBuilder:
       print ""
       print "++++++++++++"
       count = 0
+      #Now that we've index references to all spans, we can revise any parent-child relationships.
+      #Notably, by now, we can tell which is the root-most.
       for sp in orderedTrace:
          self.process(sp)
-         if count == 4:
-            sys.exit(0)
-         count = count + 1
-      
+         #if count == 4:
+         #   sys.exit(0)
+         #count = count + 1
+      #DEBUG if we hit this case
+      if not self.rootSpan:
+         #substituting dummy node for missing root span:
+         self.rootSpan = SpanNode()
+         #raise ValueError("Tree with not Root, check if correct- could have asynchronous communicaton or bug in code")
 
-   
+      # At this point, we have the most reliable parent-child relationships and can allocate spans
+      # corresponding the the best place in the trace tree.
+      for spanKey in self.spanToParent:
+         child = self.keyToNode[spanKey]
+         print "span: " + spanKey+" " +child.span['kind']
+         parentId = self.spanToParent[spanKey]
+         parent = self.keyToNode[parentId] if parentId in self.keyToNode else None
+         # if parent is not in self.keyToNode then its parent should be root
+         if not parent:
+            print "span again: " + spanKey+" " +child.span['kind']
+            self.rootSpan.addChild(child)
+         else:
+            parent.addChild(child)
+         
+      return self.rootSpan
+
+
+def printTree(root, space):
+   #s = '' 
+   #space = ' ' * len(space)
+   #s = s + space
+   print space + root.span['localEndpoint']['serviceName'] , root.span['localEndpoint']['ipv4'], root.span['id'], root.span['kind'], (root.span['shared'] if 'shared' in root.span else ""),(root.parent.span['id'] if 'parentId' in root.span else "undefined"),(root.parent.span['kind'] if root.parent else "undefined") 
+   children = root.getChildren()
+   if len(children) == 0:
+      return
+   else:
+      for c in children:
+         printTree(c,"    "+space)
 
 
 def parse_trace(trace):
    #print trace[0]
    #getInitialService(trace)
    builder = SpanNodeBuilder()
-   builder.build(trace)
-      
-     
+   root = builder.build(trace)
+   if not root.span:
+      print "no root - revise if correct"
+   print "**************************"
+   printTree(root, "")
+   #TODO: Merge Server spans with Client spans sharing same id
+   
 
 
 """
