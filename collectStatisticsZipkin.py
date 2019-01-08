@@ -261,6 +261,19 @@ def printTree(root, space):
       for c in children:
          printTree(c,"    "+space)
 
+def getMicroservicesCovered(root, services):
+   
+
+   services.add( root.span['localEndpoint']['serviceName'])
+   children = root.getChildren()
+   if len(children) == 0:
+      pass
+   else:
+      for c in children:
+         getMicroservicesCovered(c,services)
+   
+   return services    
+   
 
 def parse_trace(trace):
    #print trace[0]
@@ -271,8 +284,13 @@ def parse_trace(trace):
       print "no root - revise if correct"
    print "**************************"
    printTree(root, "")
+   print "Microservices Covered"
+   services = set()
+   services = getMicroservicesCovered(root,services)
+   print str(len(services)) + " microservices covered!"
+   pprint.pprint(services)
    #TODO: Merge Server spans with Client spans sharing same id
-   
+
 
 
 """
@@ -288,7 +306,8 @@ def main():
         with open(inputFile) as jsonTrace:
             trace = json.load(jsonTrace)
             parse_trace(trace)
-
+            
+             
 
 
 if __name__ == '__main__':
