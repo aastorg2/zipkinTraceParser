@@ -11,7 +11,7 @@ import json
 import sys
 import datetime
 import pprint
-
+from dataZipkin import Span
 
 
 
@@ -62,7 +62,7 @@ def compareEndpoint(left, right):
    if byIpV4 != 0: 
       return byIpV4
 
-   return compare(left['ipv6'], right['ipv6'])
+   return compare(left['ipv6'] if 'ipv6' in left else "none", right['ipv6']if 'ipv6' in right else "none")
 """
 def compareStr(a, b): 
    if not a and not b: 
